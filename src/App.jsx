@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import icon from "./calc-icon.svg";
-import "./styles.css";
 import { Parser } from "expr-eval";
 
 function App() {
