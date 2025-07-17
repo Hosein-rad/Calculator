@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import icon from "./calc-icon.svg";
 import { Parser } from "expr-eval";
+import "./styles.css";
 
 function App() {
   const [operation, setOperation] = useState([]);
@@ -75,7 +76,7 @@ function App() {
           </button>
           <button onClick={() => setOperation((c) => [...c, "."])}>.</button>
           <button onClick={() => finalResult()} className="row-span">
-            {""}=
+            =
           </button>
         </div>
       </div>
