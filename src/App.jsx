@@ -42,7 +42,7 @@ function App() {
       <img
         id="icon"
         onClick={() => setDisplay(!display)}
-        src="/src/calc-icon.svg"
+        src="./calc-icon.svg"
         alt="calculator-icon"
         width="60px"
         height="60px"
