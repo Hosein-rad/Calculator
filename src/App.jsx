@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import icon from "./calc-icon.svg";
 import "./styles.css";
 import { Parser } from "expr-eval";
 
@@ -42,7 +43,7 @@ function App() {
       <img
         id="icon"
         onClick={() => setDisplay(!display)}
-        src="/src/calc-icon.svg"
+        src={icon}
         alt="calculator-icon"
         width="60px"
         height="60px"
