@@ -1,64 +1,11 @@
-body {
-  background-color: rgb(26, 26, 26);
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+@import "tailwindcss";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-.flex {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-}
-
-#icon {
-  opacity: 50%;
-  transition: all 0.2s linear;
-}
-
-#icon:hover {
-  scale: 1.1;
-  opacity: 100%;
-  cursor: cell;
-}
-
-.screen {
-  padding: 0 0.3rem;
-  overflow-wrap: anywhere;
-  border-radius: 5px;
-  width: 8rem;
-  height: auto;
-  min-height: 1.2rem;
-  background-color: rgb(128, 158, 255);
-  margin: 1rem 0;
-}
-
-.numPad {
-  width: 8rem;
-  margin: 0 auto;
-  gap: 3px;
-}
-
-.column-span {
-  grid-column: span 2;
-}
-
-.row-span {
-  grid-row: span 2;
-}
-
-.hidden {
-  visibility: hidden;
-}
-
-.error {
-  color: red;
+.number {
+  color: antiquewhite;
 }

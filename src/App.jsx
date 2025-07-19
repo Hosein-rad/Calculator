@@ -1,84 +1,61 @@
-import { useEffect, useState } from "react";
-import icon from "./calc-icon.svg";
+import { useEffect, useMemo, useState } from "react";
 import { Parser } from "expr-eval";
-import "./styles.css";
+import { Image } from "./Image";
+import { Key } from "./Key";
+import { Keypad } from "./Keypad";
+
 
 function App() {
-  const [operation, setOperation] = useState([]);
-  const [result, setResult] = useState();
-  const [display, setDisplay] = useState(true);
-  const [error, setError] = useState(null);
+  const [array, setArray] = useState([]);
+  const [display, setDisplay] = useState();
 
-  const jsx = operation.join("");
+  const parser = useMemo(() => new Parser(), []);
 
   useEffect(() => {
-    let showUp = jsx.replace(/\//g, "÷");
-    showUp = showUp.replace(/\*/g, "×");
-    setResult(showUp);
-    if (error) {
-      finalResult();
-      setError(null);
-    }
-  }, [operation, jsx]);
+    const jsx = [...array];
+    setDisplay(jsx);
+  }, [array]);
 
-  function finalResult() {
-    try {
-      const parser = new Parser();
-      const finalRes = parser.evaluate(jsx);
-      setResult(Number(finalRes));
-      setOperation([Number(finalRes)]);
-    } catch (error) {
-      console.log(error);
-      setError("Wrong Entry");
-    }
-  }
+  const arrayChanger = (label) => {
+    if (label !== "=" && label !== "C" && label !== "⌫")
+      setArray((c) => [...c, label]);
+    console.log(array);
+  };
 
-  function backspace() {
-    const newArr = operation.slice(0, -1);
-    setOperation(newArr);
-  }
+  const submit = () => {
+    const resultStrRaw = array.join("").replace(/×/g, "*").replace(/÷/g, "/");
+    const result = parser
+      .evaluate(resultStrRaw)
+      // .toFixed(4) --> 1.1 * 3000 returns 3300.0000 | without it, returns 3300.00...005 <-- TO FIX
+      .toString()
+      .split("");
+    setArray(result);
+  };
+
+  const backspace = () => {
+    const newArr = array.slice(0, -1);
+    setArray(newArr);
+  };
+
+  const reset = () => {
+    setArray([]);
+  };
 
   return (
-    <div className="flex">
-      <img
-        id="icon"
-        onClick={() => setDisplay(!display)}
-        src={icon}
-        alt="calculator-icon"
-        width="60px"
-        height="60px"
-      />
-      <div className="error">{error}</div>
-      <div className={`container ${display ? "hidden" : null}`}>
-        <div className="screen">
-          <p>{result}</p>
+
+    <div className="w-full h- flex flex-col center justify-center items-center">
+      <Image />
+      <div className="h-80 bg-[#3C4144] rounded-2xl">
+        <div className="w-[90%] h-13 my-7  mx-auto rounded-full bg-neutral-300 shadow-[0_10px_15px]">
+          {display}
+
         </div>
-        <div className="grid numPad">
-          <button onClick={() => backspace()}>⌫</button>
-          <button onClick={() => setOperation([])}>C</button>
-          <button onClick={() => setOperation((c) => [...c, "!"])}>!</button>
-          <button onClick={() => setOperation((c) => [...c, "*"])}>×</button>
-          <button onClick={() => setOperation((c) => [...c, "7"])}>7</button>
-          <button onClick={() => setOperation((c) => [...c, "8"])}>8</button>
-          <button onClick={() => setOperation((c) => [...c, "9"])}>9</button>
-          <button onClick={() => setOperation((c) => [...c, "/"])}>÷</button>
-          <button onClick={() => setOperation((c) => [...c, "4"])}>4</button>
-          <button onClick={() => setOperation((c) => [...c, "5"])}>5</button>
-          <button onClick={() => setOperation((c) => [...c, "6"])}>6</button>
-          <button onClick={() => setOperation((c) => [...c, "-"])}>-</button>
-          <button onClick={() => setOperation((c) => [...c, "1"])}>1</button>
-          <button onClick={() => setOperation((c) => [...c, "2"])}>2</button>
-          <button onClick={() => setOperation((c) => [...c, "3"])}>3</button>
-          <button onClick={() => setOperation((c) => [...c, "+"])}>+</button>
-          <button onClick={() => setOperation((c) => [...c, "0"])}>0</button>
-          <button onClick={() => setOperation((c) => [...c, "000"])}>
-            000
-          </button>
-          <button onClick={() => setOperation((c) => [...c, "."])}>.</button>
-          <button onClick={() => finalResult()} className="row-span">
-            =
-          </button>
-        </div>
+        <Keypad
+          arrayChanger={arrayChanger}
+          submit={submit}
+          backspace={backspace}
+          reset={reset}
+        />
       </div>
     </div>
   );
