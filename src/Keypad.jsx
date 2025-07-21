@@ -23,7 +23,7 @@ const Keys = [
   { value: "=", style: "submit", key: 19 },
 ];
 
-export function Keypad({ arrayChanger, submit, backspace, reset }) {
+export function Keypad({ backspace, reset }) {
   return (
     <div className="grid grid-cols-4 grid-rows-5 grid-flow-col w-50 gap-2">
       {Keys.map((btn) => {
@@ -40,12 +40,7 @@ export function Keypad({ arrayChanger, submit, backspace, reset }) {
               }
             }}
           >
-            <Key
-              submit={submit}
-              label={btn.value}
-              style={btn.style}
-              arrayChanger={arrayChanger}
-            />
+            <Key label={btn.value} style={btn.style} />
           </div>
         );
       })}
